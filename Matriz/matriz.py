@@ -8,7 +8,7 @@ matrix = [[random.randint(0, 2) for num in range(5)] for num in range(5)]
 matrix = np.array(matrix)
 
 def checkSequenceOnRows(matrix):
-	"""Returns True/False depending on the presence of four  same consecutive numbers"""
+	"""Returns True/False depending on the presence of four same consecutive numbers"""
 	for row in matrix:
 		counter = 0
 		previousNum = row[0]
@@ -31,5 +31,5 @@ def checkSequenceOnColumns(matrix):
 for row in matrix:	# TEST
     print(row)		# TEST
 
-print("secuence precense: ",( checkSequenceOnRows(matrix) or checkSequenceOnColumns(matrix) )) # TEST
+print("Sequence presense: ",( checkSequenceOnRows(matrix) or checkSequenceOnColumns(matrix) )) # TEST
       
