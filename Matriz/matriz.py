@@ -4,34 +4,53 @@
 import random
 import numpy as np
 
-matrix = [[random.randint(0, 2) for num in range(5)] for num in range(5)]
-matrix = np.array(matrix)
 
 sequenceArray = []
 
-def checkSequenceOnRows(matrix):
+def checkSequenceOnRows(matrix, rowCheck = True):
 	"""Returns True/False depending on the presence of four same consecutive numbers"""
-	for row in matrix:
+	for indexMatrix, row in enumerate(matrix):
 		counter = 0
 		previousNum = row[0]
-		for num in row:
+		for indexRow, num in enumerate(row):
 			if num == previousNum:
 				counter += 1
 			else:
 				counter = 1
 			previousNum = num
 			if counter == 4:
-				return True
-	return False
+				if(rowCheck):
+					sequenceArray.append(("HORIZONTAL", 4, (indexRow-3, indexMatrix), (indexRow, indexMatrix)))
+				else:
+					sequenceArray.append(("VERTICAL", 4, (indexMatrix, indexRow-3), (indexMatrix, indexRow)))
+
+			if counter == 5:
+				sequenceArray.pop()
+				if(rowCheck):
+					sequenceArray.append(("HORIZONTAL", 5, (indexRow-4, indexMatrix), (indexRow, indexMatrix)))
+				else:
+					sequenceArray.append(("VERTICAL", 5, (indexMatrix, indexRow-4), (indexMatrix, indexRow)))	
 
 def checkSequenceOnColumns(matrix):
 	""" Transpose the matrix and execute the presence function """
 	matrix = matrix.transpose()
-	return checkSequenceOnRows(matrix)
+	return checkSequenceOnRows(matrix, False)
 
 
-for row in matrix:	# TEST
-    print(row)		# TEST
+def run():
+	matrix = [[random.randint(0, 1) for num in range(5)] for num in range(5)]
+	matrix = np.array(matrix)
+	
+	for row in matrix:	
+		print(row)		
 
-print("Sequence presense: ",( checkSequenceOnRows(matrix) or checkSequenceOnColumns(matrix) )) # TEST
-      
+	checkSequenceOnRows(matrix)
+	checkSequenceOnColumns(matrix)
+	if(len(sequenceArray)==0):
+		print("No sequence present in matrix")
+	else:
+		for sequence in sequenceArray:
+			print("Direction: ", sequence[0],"Longitude: ",sequence[1],"|", sequence[2], "----", sequence[3])
+
+
+run() # TEST
