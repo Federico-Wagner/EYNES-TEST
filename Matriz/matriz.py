@@ -7,6 +7,8 @@ import numpy as np
 matrix = [[random.randint(0, 2) for num in range(5)] for num in range(5)]
 matrix = np.array(matrix)
 
+sequenceArray = []
+
 def checkSequenceOnRows(matrix):
 	"""Returns True/False depending on the presence of four  same consecutive numbers"""
 	for row in matrix:
